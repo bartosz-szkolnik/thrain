@@ -1,0 +1,1 @@
+export const TEXT_ELEMENT_TAG_NAME = 'TEXT_ELEMENT';
