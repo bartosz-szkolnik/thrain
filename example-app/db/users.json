@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "age": "30",
+      "name": "Bartosz",
+      "surname": "Szkolnik",
+      "password": "123456",
+      "email": "bartosz.szkolnik@gmail.com",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "age": "40",
+      "name": "Michael",
+      "surname": "Jackson",
+      "password": "123456",
+      "email": "mjackson@gmail.com",
+      "role": "user"
+    }
+  ]
+}

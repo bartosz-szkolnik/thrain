@@ -1,0 +1,20 @@
+{
+  "tasks": {
+    "tailwind": "deno run -A @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css --watch",
+    "dev": "BUILD_TYPE=DEV deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file src/main.ts",
+    "build": "BUILD_TYPE=PROD deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file src/main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@tailwindcss/cli": "npm:@tailwindcss/cli@^4.1.16",
+    "@thrain/": "../thrain/lib/",
+    "tailwindcss": "npm:tailwindcss@^4.1.16"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window"],
+    "strict": true,
+    "checkJs": true,
+    "types": ["@types/react"]
+  },
+  "nodeModulesDir": "auto"
+}
