@@ -26,7 +26,7 @@ export function evaluateCondition<T extends Record<string, unknown>>(
   // compound AND and or
   if ('and' in condition && 'or' in condition) {
     // for now, will fix later
-    throw new Error('Both AND and OR cinditions simaltenously not supported yet.');
+    throw new Error('Both AND and OR conditions simaltenously not supported yet.');
   }
 
   // compound AND

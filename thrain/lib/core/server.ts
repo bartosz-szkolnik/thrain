@@ -2,6 +2,7 @@ import { MiddlewareWrapper } from './middleware.ts';
 import { Context, Router } from './router.ts';
 
 export class Server {
+  private readonly controller = new AbortController();
   private server?: Deno.HttpServer<Deno.NetAddr>;
   router = new Router();
   middleware = new MiddlewareWrapper();
@@ -10,8 +11,17 @@ export class Server {
 
   start() {
     console.info(`Running server on host: ${this.hostname} port: ${this.port}`);
+
+    const { signal } = this.controller;
     const { hostname, port } = this;
-    this.server = Deno.serve({ hostname, port }, this.handleRequest);
+    this.server = Deno.serve({ hostname, port, signal }, this.handleRequest);
+  }
+
+  stop() {
+    console.info(`Stopping server on host: ${this.hostname} port: ${this.port}`);
+
+    this.controller.abort();
+    Deno.exit(0);
   }
 
   self() {

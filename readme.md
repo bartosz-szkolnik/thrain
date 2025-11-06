@@ -12,4 +12,5 @@ To Do:
 - [ ] Get more stuff from Hydra
 - [ ] Create something like a CDN to see how that thing works
 - [ ] Add stale-while-revalidate and other stuff to it (https://www.youtube.com/watch?v=bfLFHp7Sbkg)
-- [ ] Create a load balancer to see how that thing works
+- [x] Create a load balancer to see how that thing works
+- [ ] Create a simple RPC server & client to see how that thing works
