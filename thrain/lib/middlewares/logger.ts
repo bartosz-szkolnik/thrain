@@ -24,11 +24,11 @@ export class Logger {
 
   info(message: string) {
     const date = Temporal.Now.plainDateTimeISO();
-    console.info(`[INFO][${dateTimeFormat.format(date)}] ${message}`);
+    console.info('\x1b[32m[INFO]', `\x1b[0m[${dateTimeFormat.format(date)}] ${message}`);
   }
 
   error(message: string) {
     const date = Temporal.Now.plainDateTimeISO();
-    console.error(`[ERROR][${date}] ${message}`);
+    console.error('\x1b[31m[ERROR]', `\x1b[0m[${date}] ${message}`);
   }
 }
