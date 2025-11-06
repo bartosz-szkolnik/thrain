@@ -1,8 +1,8 @@
 {
   "tasks": {
     "tailwind": "deno run -A @tailwindcss/cli -i ./src/styles/input.css -o ./src/styles/output.css --watch",
-    "dev": "BUILD_TYPE=DEV deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file src/main.ts",
-    "build": "BUILD_TYPE=PROD deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file src/main.ts",
+    "dev": "BUILD_TYPE=DEV deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file --unstable-temporal src/main.ts",
+    "build": "BUILD_TYPE=PROD deno run --watch --allow-net --allow-read --allow-write --allow-env --env-file --unstable-temporal src/main.ts",
     "proxy": "deno run --allow-net src/proxy.ts"
   },
   "imports": {

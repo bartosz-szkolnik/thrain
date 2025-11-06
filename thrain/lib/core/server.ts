@@ -1,5 +1,8 @@
+import { Logger } from '../middlewares/logger.ts';
 import { MiddlewareWrapper } from './middleware.ts';
 import { Context, Router } from './router.ts';
+
+const logger = Logger.instance;
 
 export class Server {
   private readonly controller = new AbortController();
@@ -10,7 +13,7 @@ export class Server {
   constructor(private hostname: string, private port: number) {}
 
   start() {
-    console.info(`Running server on host: ${this.hostname} port: ${this.port}`);
+    logger.info(`Running server on host: ${this.hostname} port: ${this.port}`);
 
     const { signal } = this.controller;
     const { hostname, port } = this;
@@ -18,7 +21,7 @@ export class Server {
   }
 
   stop() {
-    console.info(`Stopping server on host: ${this.hostname} port: ${this.port}`);
+    logger.info(`Stopping server on host: ${this.hostname} port: ${this.port}`);
 
     this.controller.abort();
     Deno.exit(0);

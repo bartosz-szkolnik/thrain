@@ -1,3 +1,14 @@
+export declare namespace Temporal {
+  namespace Now {
+    function plainDateTimeISO(): Date;
+  }
+}
+
+const dateTimeFormat = Intl.DateTimeFormat('en-GB', {
+  dateStyle: 'short',
+  timeStyle: 'full',
+});
+
 export class Logger {
   private static _instance: Logger;
 
@@ -12,10 +23,12 @@ export class Logger {
   }
 
   info(message: string) {
-    console.info(`[INFO] ${message}`);
+    const date = Temporal.Now.plainDateTimeISO();
+    console.info(`[INFO][${dateTimeFormat.format(date)}] ${message}`);
   }
 
   error(message: string) {
-    console.error(`[ERROR] ${message}`);
+    const date = Temporal.Now.plainDateTimeISO();
+    console.error(`[ERROR][${date}] ${message}`);
   }
 }

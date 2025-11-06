@@ -16,7 +16,7 @@ const layout = Layout.instance;
 
 // Define logging middleware
 server.middleware.use((ctx, next) => {
-  logger.info(`Request received for ${ctx.request.url}`);
+  logger.info(`Request received for ${ctx.request.method} ${ctx.request.url}`);
   return next();
 });
 
