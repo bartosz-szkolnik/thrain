@@ -1,0 +1,17 @@
+{
+  "tasks": {
+    "server": "deno run --allow-net --allow-read src/server/main.ts",
+    "client": "deno run --allow-net src/client/main.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@thrain/": "../thrain/lib/"
+  },
+  "compilerOptions": {
+    "lib": ["deno.window"],
+    "strict": true,
+    "checkJs": true,
+    "types": ["@types/react"]
+  },
+  "nodeModulesDir": "auto"
+}

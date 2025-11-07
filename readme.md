@@ -13,7 +13,7 @@ To Do:
 - [ ] Create something like a CDN to see how that thing works
 - [ ] Add stale-while-revalidate and other stuff to it (https://www.youtube.com/watch?v=bfLFHp7Sbkg)
 - [x] Create a load balancer to see how that thing works
-- [ ] Create a simple RPC server & client to see how that thing works
+- [x] Create a simple RPC server & client to see how that thing works
 
 ## In the process of creation this thing I used these resources:
 
@@ -26,4 +26,6 @@ I want to keep them here in case somebody else needs them
 - Caching & Expire Tags - [Remix Run - Introduction to HTTP Caching](https://www.youtube.com/watch?v=3XkU_DXcgl0)
 - How to add a proxy in Deno - [Creating a HTTP proxy with Deno](https://blog.r0b.io/post/creating-a-proxy-with-deno/)
 - How to create load balancing mechanism in Deno - [🌐 Node.js and the Art of Load Balancing: From Zero to Hero](https://www.youtube.com/watch?v=2oZJSePTivY)
+- How to create a RPC server & client - [Lightweight Typescript RPC Example](https://github.com/JonathanTurnock/minimal-ts-rpc/tree/main)
+- How to handle JSX.IntrinsicElements - [What is JSX.IntrinsicElements?](https://www.totaltypescript.com/what-is-jsx-intrinsicelements)
 - Validation utility (zod-like) - taken from book TypeScript na Poważnie by Michał Miszczyszyn

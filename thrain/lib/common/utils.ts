@@ -4,7 +4,7 @@ export function readTextFile(path: string) {
   return Deno.readTextFile(path);
 }
 
-export function writeFile(path: string, json: string) {
+export function writeTextFile(path: string, json: string) {
   return Deno.writeTextFile(path, json);
 }
 
