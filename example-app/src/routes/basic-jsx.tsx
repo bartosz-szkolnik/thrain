@@ -4,7 +4,7 @@ import { Auth } from '@thrain/middlewares/auth.ts';
 import { Server } from '@thrain/core/server.ts';
 import { Children, createElement, renderStaticHTML } from '@thrain/template/index.ts';
 import { htmlResponse } from '@thrain/common/http-helpers.ts';
-import { readFormData, redirect } from '@thrain/common/utils.ts';
+import { redirect } from '@thrain/common/utils.ts';
 
 const auth = Auth.instance;
 auth.addPublicRoutes('/jsx', '/jsx/home', '/test2');
@@ -30,7 +30,7 @@ export function createJSXRoutes(server: Server) {
   });
 
   server.router.post('/test2', async ctx => {
-    const data = await readFormData(ctx);
+    const data = await ctx.request.formData();
     console.log(data);
 
     return redirect('/jsx');

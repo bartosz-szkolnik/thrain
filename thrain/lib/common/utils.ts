@@ -19,6 +19,10 @@ export function redirect(location: string, status = 302) {
   });
 }
 
+/**
+ * @deprecated Use `ctx.request.formData();` to get the FormData object.
+ * Leaving it here just for educational purposes.
+ */
 export async function readFormData(ctx: Context) {
   if (!ctx.request.body) {
     throw new Error('Provided context with no body.');

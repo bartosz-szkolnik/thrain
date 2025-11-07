@@ -20,6 +20,23 @@ function throwTypeError(expected: string, got: unknown): never {
 }
 
 export const Validator = {
+  any() {
+    return {
+      validate(_value: any) {
+        return true;
+      },
+      parse(value: any): any {
+        return value;
+      },
+      safeParse(value: any): any | null {
+        try {
+          return this.parse(value);
+        } catch {
+          return null;
+        }
+      },
+    } as ValidatorT<any>;
+  },
   string() {
     return {
       validate(str: unknown): str is string {

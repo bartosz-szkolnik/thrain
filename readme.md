@@ -7,13 +7,16 @@ To Do:
 - [ ] Fix the issue with expiring jwts
 - [ ] Fix the children (they must be optional with jsx components)
 - [ ] Fix the QueryBuilder types
-- [ ] Add more things to database module
+- [x] Add more things to database module
 - [ ] Add tests
 - [ ] Get more stuff from Hydra
 - [ ] Create something like a CDN to see how that thing works
 - [ ] Add stale-while-revalidate and other stuff to it (https://www.youtube.com/watch?v=bfLFHp7Sbkg)
 - [x] Create a load balancer to see how that thing works
 - [x] Create a simple RPC server & client to see how that thing works
+- [ ] (maybe) Create a css prop that will change that string into a style tag with those styles (preferably encapsulated)
+- [ ] Add the ability to hydrate client component (https://www.youtube.com/live/xt_iEOn2a6Y?si=wyUsCtO_m1qc2J37&t=23890)
+- [ ] Add `route()` to the router, which will add a prefix to all routes
 
 ## In the process of creation this thing I used these resources:
 

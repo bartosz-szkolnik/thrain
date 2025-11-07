@@ -1,7 +1,7 @@
 import { Auth, Logger } from '@thrain/middlewares/index.ts';
 import { Server } from '@thrain/core/index.ts';
 import { createElement, renderStaticHTML } from '@thrain/template/index.ts';
-import { readFormData, redirect } from '@thrain/common/index.ts';
+import { redirect } from '@thrain/common/index.ts';
 import { createCookieWithToken, validateData } from '../auth.ts';
 import { getUserByCredentials } from '../db/users.ts';
 import { htmlResponse } from '@thrain/common/http-helpers.ts';
@@ -29,7 +29,7 @@ export function createAuthRoutes(server: Server) {
   });
 
   server.router.post('/authenticate', async ctx => {
-    const formData = await readFormData(ctx);
+    const formData = await ctx.request.formData();
     const data = Object.fromEntries(formData.entries());
 
     try {

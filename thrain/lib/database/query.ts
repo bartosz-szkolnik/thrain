@@ -23,7 +23,7 @@ export function evaluateCondition<T extends Record<string, unknown>>(
   item: T,
   condition: Condition<Extract<keyof T, string>>,
 ): boolean {
-  // compound AND and or
+  // compound AND and OR
   if ('and' in condition && 'or' in condition) {
     // for now, will fix later
     throw new Error('Both AND and OR conditions simaltenously not supported yet.');

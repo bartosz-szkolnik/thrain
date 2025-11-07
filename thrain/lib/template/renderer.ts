@@ -2,6 +2,10 @@ import { isTextElement } from './element.ts';
 import type { Element, TextElement, HostElement } from './types.ts';
 
 export function renderStaticHTML(element: Element | HostElement): string {
+  if (!element) {
+    return '';
+  }
+
   if (isHostElement(element)) {
     return createHostElement(element);
   }
