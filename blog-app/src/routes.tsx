@@ -40,202 +40,204 @@ export function createRoutes(server: Server) {
     );
   });
 
-  server.router.get('/blog', async () => {
-    const posts = await getPosts();
+  server.router.route('/blog', route => {
+    route.get('/', async () => {
+      const posts = await getPosts();
 
-    return htmlResponse(
-      renderStaticHTML(
-        <div>
-          <h1>Blog Posts</h1>
+      return htmlResponse(
+        renderStaticHTML(
+          <div>
+            <h1>Blog Posts</h1>
 
-          <ul>
-            {posts.map(({ slug, title }) => (
-              <li>
-                <a href={`/blog/${slug}`}>{title}</a>
-              </li>
-            ))}
-          </ul>
-
-          <p>
-            <a href="/blog/new">New Post</a>
-          </p>
-
-          <footer>
-            <p>
-              <a href="/home">Home</a>
-            </p>
-          </footer>
-        </div>,
-      ),
-    );
-  });
-
-  server.router.get('/blog/new', () => {
-    return htmlResponse(
-      renderStaticHTML(
-        <div style="max-width: 650px; margin: 40px auto; line-height: 1.6;">
-          <h1>New Blog Post</h1>
-          <form action="/blog" method="POST" style={`display: grid; gap: 1rem; `} encType="multipart/form-data">
-            <div style={`display: grid; gap: 0.5rem;`}>
-              <label for="title">Title</label>
-              <input type="text" name="title" id="title" required="" />
-            </div>
-            <div style={`display: grid; gap: 0.5rem;`}>
-              <label for="content">Content</label>
-              <textarea rows="10" name="content" id="content" required="" />
-            </div>
-            <div style={`display: grid; gap: 0.5rem;`}>
-              <label for="image">Cover Image</label>
-              <input type="file" name="image" id="image" accept="image/*" />
-            </div>
-            <div style={`display: flex; `}>
-              <button style="max-width: 100px;" type="submit">
-                Create
-              </button>
-            </div>
-          </form>
-
-          <footer>
-            <p>
-              <a href="/blog">Blog</a>
-            </p>
+            <ul>
+              {posts.map(({ slug, title }) => (
+                <li>
+                  <a href={`/blog/${slug}`}>{title}</a>
+                </li>
+              ))}
+            </ul>
 
             <p>
-              <a href="/home">Home</a>
-            </p>
-          </footer>
-        </div>,
-      ),
-    );
-  });
-
-  server.router.post('/blog', async ctx => {
-    const formData = await ctx.request.formData();
-    const data = Object.fromEntries(formData.entries());
-    const values = blogPostValidatorWithImage.safeParse(data);
-
-    if (!values) {
-      return new Response('Missing title or content', { status: 400, headers: { 'Content-Type': 'text/html' } });
-    }
-
-    const { title, content } = values;
-    const slug = title.replaceAll(' ', '-').toLowerCase();
-
-    const file = formData.get('image') as File | null;
-    const coverImage = await writeFile(file, slug);
-
-    const post = await createBlogPost({ title, content, slug, coverImage });
-
-    return redirect(`/blog/${post.slug}`, 303);
-  });
-
-  server.router.post('/blog/:id/edit', async ctx => {
-    const formData = await ctx.request.formData();
-    const data = Object.fromEntries(formData.entries());
-    const values = blogPostValidator.safeParse(data);
-
-    if (!values) {
-      return new Response('Missing title or content', { status: 400, headers: { 'Content-Type': 'text/html' } });
-    }
-
-    const post = await editBlogPost(ctx.params.id, values);
-    return redirect(`/blog/${post.slug}`, 303);
-  });
-
-  server.router.get('/blog/:id/delete', async ctx => {
-    await deleteBlogPost(ctx.params.id);
-    return redirect(`/blog`, 303);
-  });
-
-  server.router.get('/blog/:slug', async ctx => {
-    const { slug } = ctx.params;
-    const post = await getPostBySlug(slug);
-    const imageUrl = await getImageUrl(post);
-
-    if (!post) {
-      return htmlResponse('404 Not found');
-    }
-
-    return htmlResponse(
-      renderStaticHTML(
-        <div>
-          <h1>{post.title}</h1>
-          <p>{post.content}</p>
-
-          {imageUrl && (
-            <p style="width: 100%;">
-              <img src={imageUrl ?? ''} alt={post?.title} style="max-width: 100%; border-radius: 8px;" />
-            </p>
-          )}
-
-          <p>
-            <a href={`/blog/${post.id}/edit`}>Edit post</a>
-          </p>
-          <p>
-            <a href={`/blog/${post.id}/delete`}>Delete post</a>
-          </p>
-
-          <footer>
-            <p>
-              <a href="/blog">Blog</a>
+              <a href="/blog/new">New Post</a>
             </p>
 
-            <p>
-              <a href="/home">Home</a>
-            </p>
-          </footer>
-        </div>,
-      ),
-    );
-  });
+            <footer>
+              <p>
+                <a href="/home">Home</a>
+              </p>
+            </footer>
+          </div>,
+        ),
+      );
+    });
 
-  server.router.get('/blog/:id/edit', async ctx => {
-    const { id } = ctx.params;
-    const post = await getPostById(id);
+    route.get('/new', () => {
+      return htmlResponse(
+        renderStaticHTML(
+          <div style="max-width: 650px; margin: 40px auto; line-height: 1.6;">
+            <h1>New Blog Post</h1>
+            <form action="/blog" method="POST" style={`display: grid; gap: 1rem; `} encType="multipart/form-data">
+              <div style={`display: grid; gap: 0.5rem;`}>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required="" />
+              </div>
+              <div style={`display: grid; gap: 0.5rem;`}>
+                <label for="content">Content</label>
+                <textarea rows="10" name="content" id="content" required="" />
+              </div>
+              <div style={`display: grid; gap: 0.5rem;`}>
+                <label for="image">Cover Image</label>
+                <input type="file" name="image" id="image" accept="image/*" />
+              </div>
+              <div style={`display: flex; `}>
+                <button style="max-width: 100px;" type="submit">
+                  Create
+                </button>
+              </div>
+            </form>
 
-    if (!post) {
-      return htmlResponse('404 Not found');
-    }
+            <footer>
+              <p>
+                <a href="/blog">Blog</a>
+              </p>
 
-    return htmlResponse(
-      renderStaticHTML(
-        <div style="max-width: 650px; margin: 40px auto; line-height: 1.6;">
-          <h1>Edit Blog Post</h1>
-          <form
-            action={`/blog/${post.id}/edit`}
-            method="POST"
-            style={`display: grid; gap: 1rem; `}
-            encType="multipart/form-data"
-          >
-            <div style={`display: grid; gap: 0.5rem;`}>
-              <label for="title">Title</label>
-              <input type="text" name="title" id="title" required="" value={post.title} />
-            </div>
-            <div style={`display: grid; gap: 0.5rem;`}>
-              <label for="content">Content</label>
-              <textarea rows="10" name="content" id="content" required="">
-                {post.content}
-              </textarea>
-            </div>
-            <div style={`display: flex; `}>
-              <button style="max-width: 100px;" type="submit">
-                Confirm
-              </button>
-            </div>
-          </form>
+              <p>
+                <a href="/home">Home</a>
+              </p>
+            </footer>
+          </div>,
+        ),
+      );
+    });
 
-          <footer>
-            <p>
-              <a href="/blog">Blog</a>
-            </p>
+    route.post('/', async ctx => {
+      const formData = await ctx.request.formData();
+      const data = Object.fromEntries(formData.entries());
+      const values = blogPostValidatorWithImage.safeParse(data);
+
+      if (!values) {
+        return new Response('Missing title or content', { status: 400, headers: { 'Content-Type': 'text/html' } });
+      }
+
+      const { title, content } = values;
+      const slug = title.replaceAll(' ', '-').toLowerCase();
+
+      const file = formData.get('image') as File | null;
+      const coverImage = await writeFile(file, slug);
+
+      const post = await createBlogPost({ title, content, slug, coverImage });
+
+      return redirect(`/blog/${post.slug}`, 303);
+    });
+
+    route.post('/:id/edit', async ctx => {
+      const formData = await ctx.request.formData();
+      const data = Object.fromEntries(formData.entries());
+      const values = blogPostValidator.safeParse(data);
+
+      if (!values) {
+        return new Response('Missing title or content', { status: 400, headers: { 'Content-Type': 'text/html' } });
+      }
+
+      const post = await editBlogPost(ctx.params.id, values);
+      return redirect(`/blog/${post.slug}`, 303);
+    });
+
+    route.get('/:id/delete', async ctx => {
+      await deleteBlogPost(ctx.params.id);
+      return redirect(`/blog`, 303);
+    });
+
+    route.get('/:slug', async ctx => {
+      const { slug } = ctx.params;
+      const post = await getPostBySlug(slug);
+      const imageUrl = await getImageUrl(post);
+
+      if (!post) {
+        return htmlResponse('404 Not found');
+      }
+
+      return htmlResponse(
+        renderStaticHTML(
+          <div>
+            <h1>{post.title}</h1>
+            <p>{post.content}</p>
+
+            {imageUrl && (
+              <p style="width: 100%;">
+                <img src={imageUrl ?? ''} alt={post?.title} style="max-width: 100%; border-radius: 8px;" />
+              </p>
+            )}
 
             <p>
-              <a href="/home">Home</a>
+              <a href={`/blog/${post.id}/edit`}>Edit post</a>
             </p>
-          </footer>
-        </div>,
-      ),
-    );
+            <p>
+              <a href={`/blog/${post.id}/delete`}>Delete post</a>
+            </p>
+
+            <footer>
+              <p>
+                <a href="/blog">Blog</a>
+              </p>
+
+              <p>
+                <a href="/home">Home</a>
+              </p>
+            </footer>
+          </div>,
+        ),
+      );
+    });
+
+    route.get('/:id/edit', async ctx => {
+      const { id } = ctx.params;
+      const post = await getPostById(id);
+
+      if (!post) {
+        return htmlResponse('404 Not found');
+      }
+
+      return htmlResponse(
+        renderStaticHTML(
+          <div style="max-width: 650px; margin: 40px auto; line-height: 1.6;">
+            <h1>Edit Blog Post</h1>
+            <form
+              action={`/blog/${post.id}/edit`}
+              method="POST"
+              style={`display: grid; gap: 1rem; `}
+              encType="multipart/form-data"
+            >
+              <div style={`display: grid; gap: 0.5rem;`}>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required="" value={post.title} />
+              </div>
+              <div style={`display: grid; gap: 0.5rem;`}>
+                <label for="content">Content</label>
+                <textarea rows="10" name="content" id="content" required="">
+                  {post.content}
+                </textarea>
+              </div>
+              <div style={`display: flex; `}>
+                <button style="max-width: 100px;" type="submit">
+                  Confirm
+                </button>
+              </div>
+            </form>
+
+            <footer>
+              <p>
+                <a href="/blog">Blog</a>
+              </p>
+
+              <p>
+                <a href="/home">Home</a>
+              </p>
+            </footer>
+          </div>,
+        ),
+      );
+    });
   });
 }
 

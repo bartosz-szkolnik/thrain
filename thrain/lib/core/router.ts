@@ -1,3 +1,4 @@
+import { RouterGroup } from './router-group.ts';
 import { zip } from './utils.ts';
 
 export type Context = {
@@ -30,6 +31,19 @@ export class Router {
 
   delete(path: string, handler: RouteHandler) {
     this.addRoute('DELETE', path, handler);
+  }
+
+  route(prefix: string): RouterGroup;
+  route(prefix: string, callback: (group: RouterGroup) => void): Router;
+  route(prefix: string, callback?: (group: RouterGroup) => void): Router | RouterGroup {
+    const group = new RouterGroup(this, prefix);
+
+    if (callback) {
+      callback(group);
+      return this;
+    }
+
+    return group;
   }
 
   findMatchingRoute(method: string, url: string) {

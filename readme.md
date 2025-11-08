@@ -16,7 +16,7 @@ To Do:
 - [x] Create a simple RPC server & client to see how that thing works
 - [ ] (maybe) Create a css prop that will change that string into a style tag with those styles (preferably encapsulated)
 - [ ] Add the ability to hydrate client component (https://www.youtube.com/live/xt_iEOn2a6Y?si=wyUsCtO_m1qc2J37&t=23890)
-- [ ] Add `route()` to the router, which will add a prefix to all routes
+- [x] Add `route()` to the router, which will add a prefix to all routes
 
 ## In the process of creation this thing I used these resources:
 
