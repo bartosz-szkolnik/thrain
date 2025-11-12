@@ -29,6 +29,6 @@ export class Logger {
 
   error(message: string) {
     const date = Temporal.Now.plainDateTimeISO();
-    console.error('\x1b[31m[ERROR]', `\x1b[0m[${date}] ${message}`);
+    console.error('\x1b[31m[ERROR]', `\x1b[0m[${dateTimeFormat.format(date)}] ${message}`);
   }
 }

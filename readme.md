@@ -15,12 +15,12 @@ To Do:
 - [x] Create a load balancer to see how that thing works
 - [x] Create a simple RPC server & client to see how that thing works
 - [ ] (maybe) Create a css prop that will change that string into a style tag with those styles (preferably encapsulated)
-- [ ] Add the ability to hydrate client component (https://www.youtube.com/live/xt_iEOn2a6Y?si=wyUsCtO_m1qc2J37&t=23890)
+- [x] Add the ability to hydrate client component (without JSX yet)
+- [ ] Client components with JSX ((https://www.youtube.com/live/xt_iEOn2a6Y?si=wyUsCtO_m1qc2J37&t=23890))
 - [x] Add `route()` to the router, which will add a prefix to all routes
+- [ ] Add `watchFileSystem` to the `useRoutes` functionality, so adding new server components doesn't require restarting the server
 
 ## In the process of creation this thing I used these resources:
-
-I want to keep them here in case somebody else needs them
 
 - How to create a Server in Deno - [
   Build a micro-framework from Scratch using Deno and Typescript](https://www.youtube.com/watch?v=xpPw749kDLo)
@@ -31,4 +31,7 @@ I want to keep them here in case somebody else needs them
 - How to create load balancing mechanism in Deno - [🌐 Node.js and the Art of Load Balancing: From Zero to Hero](https://www.youtube.com/watch?v=2oZJSePTivY)
 - How to create a RPC server & client - [Lightweight Typescript RPC Example](https://github.com/JonathanTurnock/minimal-ts-rpc/tree/main)
 - How to handle JSX.IntrinsicElements - [What is JSX.IntrinsicElements?](https://www.totaltypescript.com/what-is-jsx-intrinsicelements)
+- More on HTTP Caching - [A complete guide to HTTP caching](https://www.jonoalderson.com/performance/http-caching/)
 - Validation utility (zod-like) - taken from book TypeScript na Poważnie by Michał Miszczyszyn
+
+I want to keep them here in case somebody else needs them

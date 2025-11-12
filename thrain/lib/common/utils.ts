@@ -1,4 +1,5 @@
 import { Context } from '../core/router.ts';
+import { executeAfter } from '../core/utils.ts';
 
 export function readTextFile(path: string) {
   return Deno.readTextFile(path);
@@ -58,4 +59,36 @@ export async function readFormData(ctx: Context) {
   }
 
   return formData;
+}
+
+export async function removeFilesFromDir(dir: string) {
+  await Deno.remove(dir, { recursive: true });
+}
+
+export async function removeFile(name: string) {
+  await Deno.remove(name);
+}
+
+export async function watchFileSystem(path: string, callback: (event: Deno.FsEvent) => void) {
+  const watcher = Deno.watchFs(`./${path}`);
+  const events = new Set<Deno.FsEvent['kind']>();
+
+  for await (const event of watcher) {
+    // For some reason when saving a file, two save events occur one after the other.
+    // I don't want to call the callback two times so I added
+    // this checking whether the event has occured already or not.
+    if (events.has(event.kind)) {
+      continue;
+    }
+
+    events.add(event.kind);
+    callback(event);
+
+    // We execute this after 10 miliseconds, because this for loop
+    // never stops, it keeps waiting for new events, so the code after the loop
+    // is not invoked. This made me do it this way. After 10 miliseconds
+    // (hopefully all the events finished processing), we clear the Set of events,
+    // so that the new save event (after user saved a file) will work normally.
+    executeAfter(10, () => events.clear());
+  }
 }
